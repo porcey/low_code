@@ -1,0 +1,7 @@
+// element-ui样式重置
+
+// 轮播图
+::v-deep .el-carousel__container {
+    height: 100%;
+    width: 100%;
+  }

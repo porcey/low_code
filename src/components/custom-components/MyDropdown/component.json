@@ -1,0 +1,79 @@
+{
+  "name": "选择器",
+  "icon": "el-icon-more-outline",
+  "fields": {
+    "optionList": {
+      "label": "选择器选项",
+      "type": "array",
+      "child": {
+        "text": {
+          "label": "选项",
+          "type": "string",
+          "value": ""
+        }
+      },
+      "value": [
+        {
+          "value": "0",
+          "text": "华为"
+        },
+        {
+          "value": "1",
+          "text": "小米"
+        },
+        {
+          "value": "2",
+          "text": "苹果"
+        }
+      ]
+    },
+    "optionAttrs": {
+      "label": "选择器样式",
+      "type": "object",
+      "child": {
+        "borderWidth": {
+          "label": "边框宽度",
+          "type": "number",
+          "value": 1,
+          "options": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        "paddingLeft": {
+          "label": "左侧间距",
+          "type": "number",
+          "value": 0,
+          "options": {
+            "min": 0,
+            "max": 50
+          }
+        },
+        "paddingRight": {
+          "label": "右侧间距",
+          "type": "number",
+          "value": 0,
+          "options": {
+            "min": 0,
+            "max": 50
+          }
+        },
+        "borderColor": {
+          "label": "边框颜色",
+          "type": "color",
+          "value": ""
+        },
+        "selectedColor": {
+          "label": "选中颜色",
+          "type": "color",
+          "value": ""
+        },
+        "hoverColor": {
+          "label": "悬浮颜色",
+          "type": "color",
+          "value": ""
+        }
+      }
+    }
+  }
+}

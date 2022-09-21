@@ -1,0 +1,95 @@
+<template>
+  <div :title="label">
+    <div class="mb10 f-grey f12">{{ mOptions.note }}</div>
+    <div class="nav">
+      <draggable v-model="mValue">
+        <!-- 编译模式,插槽可供自定义拖拽组件入容器 -->
+        <slot v-if="edit"></slot>
+
+        <!-- 非编译模式，根据schema子类遍历数组单项组件 -->
+        <template v-else>
+          <div v-for="(item,index) in mValue" :key="item.id" class="nav-item">
+            <component v-for="(val, key, index) in schema.child" :key="index" :is="getComponents(val.type)"
+              v-model="item[key]" v-bind="val">
+            </component>
+            <div class="nav-delete" @click="delItem(index)">x</div>
+          </div>
+        </template>
+      </draggable>
+
+    </div>
+  </div>
+</template>
+
+<script>
+import schemaMixin from "@/mixin/schemaMixin";
+
+export default {
+  name: "SchemaArray",
+
+  mixins: [schemaMixin],
+
+  props: {
+    label: {
+      type: String,
+      default: "",
+    },
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    schema: {
+      type: Object,
+      default: () => { },
+    },
+  },
+
+  methods: {
+    getComponents(type) {
+      return `schema-${type}`;
+    },
+    addItem() {
+      if (this.mValue.length >= this.mOptions?.limit) {
+        this.$notify({
+          title: "无法新增",
+          message: `最多只能添加${this.mOptions?.limit}条数据`,
+          type: "warning",
+        });
+        return;
+      }
+
+      this.mValue.push({
+        id: this.$getRandomCode(6),
+        value: this.$getRandomCode(6) + ''
+      });
+    },
+
+    delItem(i) {
+      console.log(i)
+      console.log(this.mValue)
+      this.mValue.splice(i, 1);
+    },
+  },
+  mounted() {
+    console.log("我是轮播图：", this.schema);
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+::v-deep .config-item {
+  margin-bottom: 10px !important;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+
+  .nav-delete {
+    font-size: 15px;
+    cursor: pointer;
+    padding-left: 20px;
+  }
+}
+</style>
