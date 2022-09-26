@@ -15,10 +15,7 @@
       <el-option v-for="item in optionList" :key="item.value" :label="item.text" :value="item.value" :style="{
         '--select-selectedColor': optionAttrs.selectedColor
           ? optionAttrs.selectedColor
-          : 'rgba(81, 151, 255, 1)',
-          '--select-hoverColor': optionAttrs.hoverColor
-          ? optionAttrs.hoverColor
-          : 'rgba(242, 242, 242, 1)'
+          : 'rgba(81, 151, 255, 1)'
       }">
       </el-option>
     </el-select>
@@ -48,6 +45,31 @@ export default {
     selectclick() {
       this.$bus.$emit("selectClick", this.$attrs.id);
     },
+    updDropDown(obj) {
+      let myId = this.$attrs.id
+      let curID = this.$store.state.curComponent.id
+      if (myId === curID) {
+        switch (obj.label) {
+          case "左侧间距":
+            this.optionAttrs.paddingLeft = obj.value
+            break
+          case "右侧间距":
+            this.optionAttrs.paddingRight = obj.value
+            break
+          case "边框宽度":
+            this.optionAttrs.borderWidth = obj.value
+            break
+          case "边框颜色":
+            this.optionAttrs.borderColor = obj.value
+            break
+          case "选中颜色":
+            this.optionAttrs.selectedColor = obj.value
+            break
+          default:
+            console.log("MyDropdown属性错误")
+        }
+      }
+    }
   },
   watch: {
     optionList: {
@@ -57,6 +79,9 @@ export default {
       immediate: true,
       deep: true,
     },
+  },
+  mounted() {
+    this.$bus.$on('change', this.updDropDown)
   }
 };
 </script>

@@ -11,6 +11,12 @@
 <script>
 export default {
   name: "ColumnContainer",
+  data() {
+    return {
+      theBoxShadow: true,
+      theBackground: ''
+    }
+  },
   props: {
     margin: {
       type: Object,
@@ -20,43 +26,24 @@ export default {
       type: Object,
       default: {},
     },
-    justifyContent: {
-      type: String,
-      default: "flex-start",
-    },
-    alignItems: {
-      type: String,
-      default: "center",
-    },
-    background: {
-      type: String,
-      default: "",
-    },
     gap: {
       type: Number,
       default: 10,
     },
-    boxShadow: {
-      type: Boolean,
-      default: true,
-    },
   },
   mounted() {
     this.updateStyles();
-    // console.log(this.$slots)
+    this.$bus.$on("change", this.updColCon)
   },
   computed: {
     // 主标题样式
     getTitleStyle() {
-      // console.log(this.justifyContent)
       return {
-        justifyContent: this.justifyContent,
-        alignItems: this.alignItems,
-        background: this.background,
+        background: this.theBackground,
         gap: this.gap + "px",
         margin: `${this.margin.u}px ${this.margin.r}px ${this.margin.d}px ${this.margin.l}px`,
         padding: `${this.padding.y}px ${this.padding.x}px`,
-        boxShadow: `${this.boxShadow === true
+        boxShadow: `${this.theBoxShadow === true
           ? "0 4px 6px 0 rgba(12, 31, 80, 0.14)"
           : "none"
           } `,
@@ -65,31 +52,44 @@ export default {
   },
   methods: {
     updateStyles() {
-      // console.log(this.padding)
       const el = this.$refs.nestParent.childNodes[0];
-      // el.style.justifyContent = "flex-end"
       Object.assign(el.style, this.getTitleStyle);
     },
-  },
-  watch: {
-    $slot: {
-      handler() {
-        // console.log("change slot");
-      },
-    },
-    justifyContent: "updateStyles",
-    alignItems: "updateStyles",
-    background: "updateStyles",
-    gap: "updateStyles",
-    margin: {
-      handler: "updateStyles",
-      deep: true,
-    },
-    padding: {
-      handler: "updateStyles",
-      deep: true,
-    },
-    boxShadow: "updateStyles",
+    updColCon(obj) {
+      let myId = this.$attrs.id
+      let curID = this.$store.state.curComponent.id
+      if (myId === curID) {
+        switch (obj.label) {
+          case "上":
+            this.margin.u = obj.value
+            break
+          case "下":
+            this.margin.d = obj.value
+            break
+          case "左":
+            this.margin.l = obj.value
+            break
+          case "右":
+            this.margin.r = obj.value
+            break
+          case "上下":
+            this.padding.y = obj.value
+            break
+          case "左右":
+            this.padding.x = obj.value
+            break
+          case "阴影":
+            this.theBoxShadow = obj.value
+            break
+          case "背景颜色":
+            this.theBackground = obj.value
+            break
+          default:
+            console.log("MyRowContainer属性错误")
+        }
+        this.updateStyles()
+      }
+    }
   },
 };
 </script>

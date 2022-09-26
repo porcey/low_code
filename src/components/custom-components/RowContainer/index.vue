@@ -1,11 +1,6 @@
 <template>
   <div class="cnt">
-    <!-- <div class="cnt-head h5-underline"></div> -->
     <div class="cnt-body" ref="nestParent">
-      <!-- <div>model - {{model}}</div> -->
-      <!-- <div ref="nestParent" class="nest-child">
-        <slot></slot>
-      </div> -->
       <slot></slot>
     </div>
   </div>
@@ -14,6 +9,12 @@
 <script>
 export default {
   name: "RowContainer",
+  data() {
+    return {
+      theBoxShadow: true,
+      theBackground: ''
+    }
+  },
   props: {
     margin: {
       type: Object,
@@ -23,22 +24,6 @@ export default {
       type: Object,
       default: {},
     },
-    boxShadow: {
-      type: Boolean,
-      default: true,
-    },
-    justifyContent: {
-      type: String,
-      default: "flex-start",
-    },
-    alignItems: {
-      type: String,
-      default: "center",
-    },
-    background: {
-      type: String,
-      default: "",
-    },
     gap: {
       type: Number,
       default: 10,
@@ -47,59 +32,64 @@ export default {
   mounted() {
     this.updateStyles();
     this.$bus.$emit('rowContainer', true)
-    // console.log(this.$slots)
+    this.$bus.$on("change", this.updRowCon)
   },
   computed: {
     // 主标题样式
     getTitleStyle() {
-      // console.log(this.justifyContent)
       return {
-        justifyContent: this.justifyContent,
-        alignItems: this.alignItems,
-        background: this.background,
+        background: this.theBackground,
         gap: this.gap + "px",
         margin: `${this.margin.u}px ${this.margin.r}px ${this.margin.d}px ${this.margin.l}px`,
         padding: `${this.padding.y}px ${this.padding.x}px`,
-        boxShadow: `${this.boxShadow === true
+        boxShadow: `${this.theBoxShadow === true
           ? "0 4px 6px 0 rgba(12, 31, 80, 0.14)"
           : "none"
           } `,
-        // display: 'flex',
-        // flexDirection: 'row',
-        // width: '100%',
       };
     },
   },
   methods: {
     updateStyles() {
-      // console.log()
       const el = this.$refs.nestParent.childNodes[0];
-      // el.style.justifyContent = "flex-end"
-      console.log(el)
       Object.assign(el.style, this.getTitleStyle);
-      // console.log("我的孩子", el.childNodes[0]);
       el.childNodes[0].style.display = 'flex'
     },
-  },
-  watch: {
-    $slot: {
-      handler() {
-        // console.log("change slot");
-      },
-    },
-    justifyContent: "updateStyles",
-    alignItems: "updateStyles",
-    background: "updateStyles",
-    margin: {
-      handler: "updateStyles",
-      deep: true,
-    },
-    padding: {
-      handler: "updateStyles",
-      deep: true,
-    },
-    gap: "updateStyles",
-    boxShadow: "updateStyles",
+    updRowCon(obj) {
+      let myId = this.$attrs.id
+      let curID = this.$store.state.curComponent.id
+      if (myId === curID) {
+        switch (obj.label) {
+          case "上":
+            this.margin.u = obj.value
+            break
+          case "下":
+            this.margin.d = obj.value
+            break
+          case "左":
+            this.margin.l = obj.value
+            break
+          case "右":
+            this.margin.r = obj.value
+            break
+          case "上下":
+            this.padding.y = obj.value
+            break
+          case "左右":
+            this.padding.x = obj.value
+            break
+          case "阴影":
+            this.theBoxShadow = obj.value
+            break
+          case "背景颜色":
+            this.theBackground = obj.value
+            break
+          default:
+            console.log("MyRowContainer属性错误")
+        }
+        this.updateStyles()
+      }
+    }
   },
 };
 </script>

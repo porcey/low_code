@@ -9,6 +9,18 @@ const mutations = {
     CHANGECUR(state, value) {
         state.curComponent = value
     },
+    // 新建页面
+    PUSHPAGE(state, value) {
+        state.pages.push(value)
+        console.log("压入页面！", state.pages);
+    },
+    UPDATEPAGE(state, value) {
+        state.pages[value.index].widgets = value.w
+        console.log("获取页面组件了！", state.pages);
+    },
+    DELPAGE(state, value) {
+        state.pages.splice(value, 1)
+    }
 }
 
 const state = {

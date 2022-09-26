@@ -2,9 +2,6 @@
   <div class="select" :class="[direction=='column' ? 'flex-column' : '']">
     <ul class="select-label" :class="[direction=='column' ? 'mb15' : '']">
       <li class="select-label-text">{{label}}</li>
-      <!-- <li class="f14">
-        {{getLabel(value)}}
-      </li> -->
     </ul>
 
     <div class="select-body">

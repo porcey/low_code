@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- :class="[isWidget ? 'nest-child' : 'nest-area']" -->
         <draggable v-model="widgetList" group="widget" animation="500" :class="[isWidget ? 'nest-child' : 'nest-area']">
             <!-- 拖动进来的组件会被添加到widgetList中 -->
             <!-- 当前item传进widgetShape组件 :theWidget="item"-->
@@ -43,42 +42,24 @@ export default {
     components: {
         WidgetShape,
     },
-    watch: {
-        isWidget() {
-            console.log('isWidget changed');
-        },
-        widgetList() {
-            console.log('wdgetList更新啦：', this.widgetList);
-        }
-    },
     methods: {
-        getClass() {
-            if (this.column) {
-                console.log("1");
-                return 'nest-child-col'
-            } else if (this.row) {
-                console.log("2");
-                return 'nest-child-row'
-            } else {
-                console.log("4");
-                return ''
-            }
-            // return 'test'
+        clearWidgets() {
+            console.log("清空画布！");
+            this.widgetList = []
         },
-        updateRow(val) {
-            console.log("状态改变！");
-            this.row = true
-        },
-        updateCol() {
-            this.column = true
+        saveWidgets() {
+            this.$bus.$emit('curWidgetList', this.widgetList)
         }
     },
     computed: {
         ...mapState(['widgetsShow']),
     },
     mounted() {
-        // console.log("我也可以了");
-        this.$bus.$on('rowContainer', this.updateRow)
+        this.$bus.$on('deleteWidgets', this.clearWidgets),
+            this.$bus.$on('savePage', this.saveWidgets),
+            this.$bus.$on('changeShowPage', value => {
+                this.widgetList = value
+            })
     }
 }
 </script>
@@ -86,16 +67,9 @@ export default {
 <style scoped lang="scss">
 .nest-child {
     min-height: 80px;
-
 }
 
 .nest-area {
-    // display: flex;
-    // flex-direction: row;
     min-height: 600px;
-}
-
-.test {
-    background-color: pink;
 }
 </style>

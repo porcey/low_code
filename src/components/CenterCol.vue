@@ -11,8 +11,6 @@
 </template>
 
 <script>
-import { cloneDeep } from 'lodash'
-import { nanoid } from 'nanoid'
 import ControlNestWidget from './ControlNestWidget.vue'
 import WidgetShape from './WidgetShape.vue'
 export default {
