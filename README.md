@@ -1,6 +1,7 @@
 # low_code
 
 ## 项目文件结构
+```js
 ├─node_modules
 ├─public
 └─src
@@ -22,4 +23,5 @@
     ├─store
     └─utils
     │  └─globalRegister.js	// 物料组件与属性配置组件的自动注册
-	│  └─registerSchema.js	// 对描述物料组件的JSON文件进行处理
+    │  └─registerSchema.js	// 对描述物料组件的JSON文件进行处理
+```
