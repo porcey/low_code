@@ -1,5 +1,5 @@
 # low_code
-**体验链接：**https://porcey.github.io/low_code/dist
+体验链接：https://porcey.github.io/low_code/dist
 
 ## 项目文件结构
 ```js
