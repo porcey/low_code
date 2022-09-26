@@ -1,6 +1,6 @@
 export default {
-    label: '页面跳转',
-    type: 'jump',
+    label: '个人展示',
+    type: 'myself',
     property: '',
     value: ''
 }

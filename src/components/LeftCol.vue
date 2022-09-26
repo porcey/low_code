@@ -14,7 +14,8 @@
                 sort:false
             }" animation="300" :clone="activeClone">
                 <transition-group class="panel">
-                    <div v-for="(item,index) in $initializing" :key="index" class="box" :icon="item">{{item.name}}
+                    <div v-for="(item,index) in $initializing" :key="index" :class="getClass(item.name)" :icon="item">
+                        {{item.name}}
                         <span :class="item.icon"></span>
                     </div>
                 </transition-group>
@@ -45,6 +46,13 @@ export default {
         }
     },
     methods: {
+        getClass(itemName) {
+            if (itemName === "许洁") {
+                return "box xj"
+            } else {
+                return "box"
+            }
+        }
     },
 }
 </script>
@@ -71,6 +79,25 @@ export default {
         text-align: center;
         line-height: 100px;
         font-size: 15px;
+    }
+
+    .xj {
+        position: relative;
+        box-sizing: border-box;
+        // border: 5px solid pink;
+    }
+
+    .xj::before {
+        content: '';
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70px;
+        height: 10px;
+        background-color: rgb(255, 229, 233);
+        border-radius: 5px;
+        z-index: 1;
     }
 
     .box:hover {
