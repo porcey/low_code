@@ -1,48 +1,55 @@
 <template>
   <div class="title">
     <!-- <el-button type="primary" @click="getMe" ref="btn">{{buttonContent}}</el-button> -->
-    <el-button :style="{
-      '--bgcColor': buttonStyles.bgColor
-        ? buttonStyles.bgColor
-        : 'rgba(81, 151, 255, 1)',
-      '--titleColor': buttonStyles.titleColor
-        ? buttonStyles.titleColor
-        : 'rgba(242, 242, 242, 1)',
-      '--borderColor': buttonStyles.bdColor ? buttonStyles.bdColor : '#DCDFE6',
-      '--titleSize': buttonStyles.titleSize + 'px',
-      '--paddingLeft': buttonStyles.paddingLeft + 'px',
-      '--paddingTop': buttonStyles.paddingTop + 'px',
-      '--borderWidth': buttonStyles.borderWidth + 'px',
-    }" @click="getMe">{{ btnTittle }}</el-button>
+    <el-button
+      :style="{
+        '--bgcColor': buttonStyles.bgColor
+          ? buttonStyles.bgColor
+          : 'rgba(81, 151, 255, 1)',
+        '--titleColor': buttonStyles.titleColor
+          ? buttonStyles.titleColor
+          : 'rgba(242, 242, 242, 1)',
+        '--borderColor': buttonStyles.bdColor
+          ? buttonStyles.bdColor
+          : '#DCDFE6',
+        '--titleSize': buttonStyles.titleSize + 'px',
+        '--paddingLeft': buttonStyles.paddingLeft + 'px',
+        '--paddingTop': buttonStyles.paddingTop + 'px',
+        '--borderWidth': buttonStyles.borderWidth + 'px',
+      }"
+      @click="getMe"
+      >{{ btnTittle }}</el-button
+    >
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
+import isCurComponent from "../../../utils/isCurComponent";
 export default {
   name: "MyButton",
   props: {
     buttonTitle: {
       type: String,
-      default: () => { },
+      default: () => {},
     },
     buttonModel: {
       type: String,
-      default: () => { },
+      default: () => {},
     },
     buttonFree: {
       type: Number,
-      default: () => { },
+      default: () => {},
     },
     buttonStyles: {
       type: Object,
-      default: () => { }
+      default: () => {},
     },
   },
   data() {
     return {
       btnTittle: this.buttonTitle,
-    }
+    };
   },
   methods: {
     getMe() {
@@ -50,50 +57,44 @@ export default {
     },
     // 更新按钮信息
     updBtn(obj) {
-      // this.$attrs.id 是组件的个人id，this.curComponent.id是当前被激活组件的id
-      let myId = this.$attrs.id
-      let curID = this.curComponent.id
       // 防止同类组件同时响应
-      if (myId === curID) {
+      if (isCurComponent(this)) {
         switch (obj.label) {
           case "左右边距":
-            this.buttonStyles.paddingLeft = obj.value
-            break
+            this.buttonStyles.paddingLeft = obj.value;
+            break;
           case "上下边距":
-            this.buttonStyles.paddingTop = obj.value
-            break
+            this.buttonStyles.paddingTop = obj.value;
+            break;
           case "文字":
-            this.btnTittle = obj.value
-            break
+            this.btnTittle = obj.value;
+            break;
           case "文字颜色":
-            this.buttonStyles.titleColor = obj.value
-            break
+            this.buttonStyles.titleColor = obj.value;
+            break;
           case "边框宽度":
-            this.buttonStyles.borderWidth = obj.value
-            break
+            this.buttonStyles.borderWidth = obj.value;
+            break;
           case "背景颜色":
-            this.buttonStyles.bgColor = obj.value
-            break
+            this.buttonStyles.bgColor = obj.value;
+            break;
           case "边框颜色":
-            this.buttonStyles.bdColor = obj.value
-            break
+            this.buttonStyles.bdColor = obj.value;
+            break;
           default:
-            console.log("MyButton属性错误")
+            console.log("MyButton属性错误");
         }
       }
-
     },
   },
   computed: {
-    ...mapState(['curComponent']),
+    ...mapState(["curComponent"]),
   },
   mounted() {
-    this.$bus.$on('change', this.updBtn)
+    this.$bus.$on("change", this.updBtn);
   },
-  watch: {
-
-  }
-}
+  watch: {},
+};
 </script>
 
 <style lang="scss" scoped>

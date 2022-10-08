@@ -1,22 +1,36 @@
-
 <template>
-  <div class="outer" :style="{
-    '--paddingLeft': optionAttrs.paddingLeft+'%',
-      '--paddingRight': optionAttrs.paddingRight+'%',
-  }">
-    <el-select v-model="value1" placeholder="请选择" @click.native="selectclick" :popper-append-to-body="false" :style="{
-      '--select-borderColor': optionAttrs.borderColor
-        ? optionAttrs.borderColor
-        : '#DCDFE6',
+  <div
+    class="outer"
+    :style="{
+      '--paddingLeft': optionAttrs.paddingLeft + '%',
+      '--paddingRight': optionAttrs.paddingRight + '%',
+    }"
+  >
+    <el-select
+      v-model="value1"
+      placeholder="请选择"
+      @click.native="selectclick"
+      :popper-append-to-body="false"
+      :style="{
+        '--select-borderColor': optionAttrs.borderColor
+          ? optionAttrs.borderColor
+          : '#DCDFE6',
         '--select-borderWidth': optionAttrs.borderWidth
-        ? optionAttrs.borderWidth+'px'
-        : '1px'
-    }">
-      <el-option v-for="item in optionList" :key="item.value" :label="item.text" :value="item.value" :style="{
-        '--select-selectedColor': optionAttrs.selectedColor
-          ? optionAttrs.selectedColor
-          : 'rgba(81, 151, 255, 1)'
-      }">
+          ? optionAttrs.borderWidth + 'px'
+          : '1px',
+      }"
+    >
+      <el-option
+        v-for="item in optionList"
+        :key="item.value"
+        :label="item.text"
+        :value="item.value"
+        :style="{
+          '--select-selectedColor': optionAttrs.selectedColor
+            ? optionAttrs.selectedColor
+            : 'rgba(81, 151, 255, 1)',
+        }"
+      >
       </el-option>
     </el-select>
   </div>
@@ -33,11 +47,11 @@ export default {
   props: {
     optionAttrs: {
       type: Object,
-      default: () => { },
+      default: () => {},
     },
     optionList: {
       type: Array,
-      default: () => { },
+      default: () => {},
     },
   },
 
@@ -46,43 +60,45 @@ export default {
       this.$bus.$emit("selectClick", this.$attrs.id);
     },
     updDropDown(obj) {
-      let myId = this.$attrs.id
-      let curID = this.$store.state.curComponent.id
+      let myId = this.$attrs.id;
+      let curID = this.$store.state.curComponent.id;
       if (myId === curID) {
         switch (obj.label) {
           case "左侧间距":
-            this.optionAttrs.paddingLeft = obj.value
-            break
+            this.optionAttrs.paddingLeft = obj.value;
+            break;
           case "右侧间距":
-            this.optionAttrs.paddingRight = obj.value
-            break
+            this.optionAttrs.paddingRight = obj.value;
+            break;
           case "边框宽度":
-            this.optionAttrs.borderWidth = obj.value
-            break
+            this.optionAttrs.borderWidth = obj.value;
+            break;
           case "边框颜色":
-            this.optionAttrs.borderColor = obj.value
-            break
+            this.optionAttrs.borderColor = obj.value;
+            break;
           case "选中颜色":
-            this.optionAttrs.selectedColor = obj.value
-            break
+            this.optionAttrs.selectedColor = obj.value;
+            break;
+          case "选择器选项":
+            break;
           default:
-            console.log("MyDropdown属性错误")
+            console.log("MyDropdown属性错误", obj.label);
         }
       }
-    }
+    },
   },
   watch: {
     optionList: {
       handler() {
-        this.value1 = ""
+        this.value1 = "";
       },
       immediate: true,
       deep: true,
     },
   },
   mounted() {
-    this.$bus.$on('change', this.updDropDown)
-  }
+    this.$bus.$on("change", this.updDropDown);
+  },
 };
 </script>
 

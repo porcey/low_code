@@ -1,0 +1,41 @@
+{
+    "name": "进度条",
+    "icon": "el-icon-data-line",
+    "fields": {
+        "percentage": {
+            "label": "百分比",
+            "type": "number",
+            "value": 50,
+            "options": {
+                "min": 0,
+                "max": 100
+            }
+        },
+        "height": {
+            "label": "高度",
+            "type": "number",
+            "value": 20
+        },
+        "bgColor": {
+            "label": "颜色",
+            "type": "color",
+            "value": ""
+        },
+        "progressType": {
+            "label": "进度条类型",
+            "type": "select",
+            "value": "line",
+            "data": [{
+                    "id": "16351625634D40SS",
+                    "label": "条状",
+                    "value": "line"
+                },
+                {
+                    "id": "16351622SQMD40dSS46",
+                    "label": "圆形",
+                    "value": "circle"
+                }
+            ]
+        }
+    }
+}

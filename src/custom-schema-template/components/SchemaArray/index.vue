@@ -2,33 +2,45 @@
   <div :title="label">
     <div class="mb10 f-grey f12">{{ mOptions.note }}</div>
     <div class="nav">
-      <draggable v-model="mValue">
-        <!-- 编译模式,插槽可供自定义拖拽组件入容器 -->
-        <slot v-if="edit"></slot>
+      <!-- 编译模式,插槽可供自定义拖拽组件入容器 -->
+      <slot v-if="edit"></slot>
 
-        <!-- 非编译模式，根据schema子类遍历数组单项组件 -->
-        <template v-else>
-          <div v-for="(item,index) in mValue" :key="item.id" class="nav-item">
-            <component v-for="(val, key, index) in schema.child" :key="index" :is="getComponents(val.type)"
-              v-model="item[key]" v-bind="val">
-            </component>
-            <div class="nav-delete" @click="delItem(index)">x</div>
-          </div>
-        </template>
-      </draggable>
-
+      <!-- 非编译模式，根据schema子类遍历数组单项组件 -->
+      <template v-else>
+        <div v-for="(item, index) in mValue" :key="item.id" class="nav-item">
+          <component
+            v-for="(val, key, index) in schema.child"
+            :key="index"
+            :is="getComponents(val.type)"
+            v-model="item[key]"
+            v-bind="val"
+          >
+          </component>
+          <div class="nav-delete" @click="delItem(index)">x</div>
+        </div>
+      </template>
+      <div class="add">
+        <el-input v-model="newItem" v-if="widgetTypes()"></el-input>
+        <el-button @click="addItem">添加选项</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import schemaMixin from "@/mixin/schemaMixin";
+import { nanoid } from "nanoid";
 
 export default {
   name: "SchemaArray",
 
   mixins: [schemaMixin],
-
+  data() {
+    return {
+      newItem: "",
+      widgetType: false,
+    };
+  },
   props: {
     label: {
       type: String,
@@ -40,7 +52,7 @@ export default {
     },
     schema: {
       type: Object,
-      default: () => { },
+      default: () => {},
     },
   },
 
@@ -59,20 +71,24 @@ export default {
       }
 
       this.mValue.push({
-        id: this.$getRandomCode(6),
-        value: this.$getRandomCode(6) + ''
+        value: nanoid() + "",
+        text: this.newItem,
       });
     },
 
     delItem(i) {
-      console.log(i)
-      console.log(this.mValue)
+      console.log(i);
+      console.log(this.mValue);
       this.mValue.splice(i, 1);
     },
+    widgetTypes() {
+      if (this.schema.label.includes("选择器")) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
-  mounted() {
-    console.log("我是轮播图：", this.schema);
-  }
 };
 </script>
 
@@ -90,6 +106,17 @@ export default {
     font-size: 15px;
     cursor: pointer;
     padding-left: 20px;
+  }
+}
+.add {
+  display: flex;
+  .el-input {
+    width: 250px;
+    height: 32px;
+    padding-left: 20px;
+  }
+  .el-button {
+    margin-left: 10px;
   }
 }
 </style>

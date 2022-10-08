@@ -1,5 +1,9 @@
 <template>
-  <el-carousel :style="{ height: theHeight+'px'}" :interval="theInterval" :autoplay="isAutoPlay">
+  <el-carousel
+    :style="{ height: theHeight + 'px' }"
+    :interval="theInterval"
+    :autoplay="isAutoPlay"
+  >
     <el-carousel-item v-for="item in carouselImgList" :key="item.id">
       <div class="imgContainer">
         <img class="imgs" :src="item.image" />
@@ -9,13 +13,13 @@
 </template>
 
 <script>
+import isCurComponent from "../../../utils/isCurComponent";
 export default {
   name: "MyCarousel",
-
   props: {
     attrs: {
       type: Object,
-      default: () => { },
+      default: () => {},
     },
     carouselImgList: {
       type: Array,
@@ -27,35 +31,51 @@ export default {
       theHeight: this.attrs.height,
       theInterval: this.attrs.switchInterval * 1000,
       isAutoPlay: this.attrs.autoPlay,
-
-    }
+      uploadList: [],
+    };
   },
   methods: {
     updCarousel(obj) {
-      let myId = this.$attrs.id
-      let curID = this.$store.state.curComponent.id
-      if (myId === curID) {
+      if (isCurComponent(this)) {
         switch (obj.label) {
           case "图片高度":
-            this.theHeight = obj.value
-            break
+            this.theHeight = obj.value;
+            break;
           case "自动播放":
-            this.isAutoPlay = obj.value
-            break
+            this.isAutoPlay = obj.value;
+            break;
           case "播放间隔":
-            this.theInterval = obj.value * 1000
-            break
+            this.theInterval = obj.value * 1000;
+            break;
+          case "轮播图列表":
+            break;
+          case "图片上传":
+            break;
           default:
-            console.log("MyCarousel属性错误")
+            console.log("MyCarousel属性错误", obj.label);
         }
       }
-    }
+    },
   },
   mounted() {
-    console.log("轮播图：", this.attrs);
-    this.$bus.$on("change", this.updCarousel)
-
-  }
+    this.$bus.$on("change", this.updCarousel);
+    this.$bus.$on("imgUpload", (img) => {
+      if (isCurComponent(this)) {
+        let index = this.uploadList.indexOf(img[1]);
+        let temp = this.carouselImgList[index];
+        temp.image = img[0];
+        this.carouselImgList.splice(index, 1, temp);
+      }
+    });
+    this.$bus.$on("toCarousel", (value) => {
+      this.uploadList.push(value);
+    });
+  },
+  watch: {
+    // carouselImgList() {
+    //   console.log("轮播图改变：", this.carouselImgList);
+    // },
+  },
 };
 </script>
 

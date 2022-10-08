@@ -1,0 +1,16 @@
+{
+    "name": "开关",
+    "icon": "el-icon-open",
+    "fields": {
+        "openColor": {
+            "label": "开启颜色",
+            "type": "color",
+            "value": "#13ce66"
+        },
+        "closeColor": {
+            "label": "关闭颜色",
+            "type": "color",
+            "value": "#ff4949"
+        }
+    }
+}

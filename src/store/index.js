@@ -12,14 +12,15 @@ const mutations = {
     // 新建页面
     PUSHPAGE(state, value) {
         state.pages.push(value)
-        console.log("压入页面！", state.pages);
     },
     UPDATEPAGE(state, value) {
         state.pages[value.index].widgets = value.w
-        console.log("获取页面组件了！", state.pages);
     },
     DELPAGE(state, value) {
         state.pages.splice(value, 1)
+    },
+    CHANGE_CHOSEN(state, value) {
+        state.isChosen = value
     }
 }
 
@@ -30,7 +31,8 @@ const state = {
     pages: [],
     curPage: 0,
     isPreview: false, // 是否处于预览状态,
-    userInfo: {} //个人信息
+    userInfo: {}, //个人信息
+    isChosen: false, // 用于widgetShape组件，实现点击其他地方组件失焦
 }
 
 export default new Vuex.Store({

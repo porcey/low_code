@@ -1,8 +1,8 @@
 <template>
-  <div id="app" style="height: 100%;">
+  <div id="app" style="height: 100%">
     <TopBar />
     <div class="main">
-      <LeftCol style="height: 100%;" />
+      <LeftCol style="height: 100%" />
       <CenterCol />
       <RightCol />
     </div>
@@ -10,24 +10,25 @@
 </template>
 
 <script>
-import TopBar from './components/TopBar'
-import LeftCol from './components/LeftCol.vue'
-import CenterCol from './components/CenterCol.vue'
-import RightCol from './components/RightCol.vue'
+import TopBar from "./components/TopBar";
+import LeftCol from "./components/LeftCol.vue";
+import CenterCol from "./components/CenterCol.vue";
+import RightCol from "./components/RightCol.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     TopBar,
     LeftCol,
     CenterCol,
-    RightCol
+    RightCol,
   },
   data() {
     return {
       curComponent: undefined,
-    }
+    };
   },
-}
+  methods: {},
+};
 </script>
 
 <style scoped>
