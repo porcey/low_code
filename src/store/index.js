@@ -15,6 +15,8 @@ const mutations = {
     },
     UPDATEPAGE(state, value) {
         state.pages[value.index].widgets = value.w
+        console.log("store1:", value.index);
+        console.log("store2:", state.pages[value.index]);
     },
     DELPAGE(state, value) {
         state.pages.splice(value, 1)

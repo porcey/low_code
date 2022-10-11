@@ -6,7 +6,8 @@
   >
     <el-carousel-item v-for="item in carouselImgList" :key="item.id">
       <div class="imgContainer">
-        <img class="imgs" :src="item.image" />
+        <img class="imgs" :src="item.image" v-if="item.image" />
+        <h3 v-else class="pictext">pic</h3>
       </div>
     </el-carousel-item>
   </el-carousel>
@@ -83,11 +84,21 @@ export default {
 .imgContainer {
   height: 100%;
   width: 100%;
-
+  text-align: center;
+  position: relative;
   .imgs {
     height: 100%;
     width: 100%;
     object-fit: cover;
   }
+  .pictext {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+:deep(.el-carousel__button) {
+  background-color: $color-theme;
 }
 </style>

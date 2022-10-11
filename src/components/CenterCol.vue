@@ -1,6 +1,7 @@
 <template>
   <div class="root" @click="borderblur">
     <div class="phone">
+      <div class="tips">切换页面之前记得保存画布~</div>
       <div class="panel-header"></div>
       <div class="view">
         <ControlNestWidget :widgets.sync="widgets" />
@@ -42,17 +43,24 @@ export default {
 }
 
 .phone {
+  position: relative;
   margin: 60px auto;
   width: 375px;
   height: 667px;
   background-color: white;
   border-radius: 15px;
-
+  .tips {
+    position: absolute;
+    top: -6%;
+    left: 23%;
+    color: rgb(125, 150, 187);
+  }
   .panel-header {
     // border: 1px solid red;
     height: 64px;
     background-image: url("../assets/head.png");
     background-size: cover;
+    margin-top: 1px;
     // .panel-content {
     //     margin: 50px auto;
     //     background: #fff;

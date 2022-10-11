@@ -124,6 +124,12 @@ export default {
       this.changePage();
     },
     savePage() {
+      this.$message({
+        message: "保存成功",
+        type: "success",
+        showClose: true,
+        duration: 1500,
+      });
       this.$bus.$emit("savePage", true);
     },
     changePage() {
