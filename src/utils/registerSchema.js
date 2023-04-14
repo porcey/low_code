@@ -11,7 +11,7 @@ registerComponentsSchema()
 function registerComponentsSchema() {
     // 路径 是否检索子文件夹 文件名
     const files = require.context('../components/custom-components', true, /component.json$/)
-    // console.log('files:', files.keys());
+    // console.log('files:');
 
     // 物料属性描述对象 （使用object类型方便调用）
     // 物料对象属性域 集合了所有物料对象的特殊属性

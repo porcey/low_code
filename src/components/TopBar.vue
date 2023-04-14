@@ -3,28 +3,15 @@
         Low-Code 低代码平台
     </div> -->
   <div class="page-head">
-    <img src="../assets/low-code_logo.png" alt="" @click="open" />
+    <img src="../assets/low-code_logo.png" alt="" />
     <div class="page-control">
-      <el-button class="page-item" size="small" @click="deleteAll"
-        >清空当前画布</el-button
-      >
-      <el-button class="page-item" size="small" @click="newPage"
-        >新建画布</el-button
-      >
-      <el-button class="page-item" size="small" @click="savePage"
-        >保存画布</el-button
-      >
-      <el-button class="page-item" size="small" @click="deletePage"
-        >删除画布</el-button
-      >
+      <el-button class="page-item" size="small" @click="deleteAll">清空当前画布</el-button>
+      <el-button class="page-item" size="small" @click="newPage">新建画布</el-button>
+      <el-button class="page-item" size="small" @click="savePage">保存画布</el-button>
+      <el-button class="page-item" size="small" @click="deletePage">删除画布</el-button>
       <div class="page-option page-item">
         <el-select v-model="curPage" placeholder="" @change="changePage">
-          <el-option
-            v-for="item in pageOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
+          <el-option v-for="item in pageOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </div>
@@ -164,31 +151,7 @@ export default {
           type: "success",
         });
       }
-    },
-    // 点击logo的菜单
-    open() {
-      this.$alert(
-        `<ul style="list-style: none;">
-                <li>
-                    <b>姓名：</b>许洁
-                </li>
-                <li><b>学校：</b>合肥工业大学</li>
-                <li><b>专业：</b>计算机科学与技术</li>
-                <li><b>求职意向：</b>前端开发</li>
-            </ul>`,
-        "😉",
-        {
-          dangerouslyUseHTMLString: true,
-          confirmButtonText: "确定",
-          callback: (action) => {
-            // this.$message({
-            //   type: "info",
-            //   message: `action: ${action}`,
-            // });
-          },
-        }
-      );
-    },
+    }
   },
 };
 </script>
@@ -215,6 +178,7 @@ export default {
   background: #fff;
   box-shadow: 0 -10px 6px 10px rgba(0, 0, 0, 0.2);
   z-index: 999;
+
   img {
     width: 100px;
     cursor: pointer;

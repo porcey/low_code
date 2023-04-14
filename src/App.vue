@@ -28,6 +28,10 @@ export default {
     };
   },
   methods: {},
+  mounted() {
+    console.log("getInit：", this.$initializing);
+    console.log("getFields：", this.$fields);
+  },
 };
 </script>
 
